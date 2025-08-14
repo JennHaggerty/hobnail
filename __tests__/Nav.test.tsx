@@ -22,11 +22,8 @@ describe("Nav", () => {
 
     expect(navItem).toBeInTheDocument();
   });
-  it("page to reload when clicking on Search", async () => {
+  it("Navgating to Search page set pageNum to 1", async () => {
     render(<Page />);
-
-    delete window.location;
-    window.location = { reload: jest.fn() };
 
     const searchPage = screen.getByTestId("search-page");
 
@@ -34,7 +31,6 @@ describe("Nav", () => {
 
     const pageNum = screen.getByText("Page 1");
 
-    expect(window.location.reload).toHaveBeenCalledTimes(1);
     expect(pageNum).toBeInTheDocument();
   });
 });

@@ -71,7 +71,7 @@ form {
 }
 
 input {
-  @apply w-full p-3 bg-white border-1 text-black w-full;
+  @apply w-full h-full px-2 bg-white border-1 text-black w-full;
 }
 
 button:not(.style-as-link) {
