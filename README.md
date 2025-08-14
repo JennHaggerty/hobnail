@@ -1,3 +1,7 @@
+# Documentation for the Repo
+
+The [Wiki](https://github.com/JennHaggerty/hobnail/wiki) has been fully written out with information about the app, its components and their tests and more! 
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
