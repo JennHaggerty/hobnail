@@ -48,7 +48,7 @@ const Page = () => {
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" role="presentation">
       <header data-testid="header">
         <Nav
           ariaLabel={strings.mainMenu}

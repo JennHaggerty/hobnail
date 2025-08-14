@@ -19,12 +19,7 @@ const Search = (props: Props) => {
 
   return (
     <div data-testid="search" className="search">
-      <form
-        className="w-full"
-        data-testid="search-form"
-        role="dialog"
-        action={onSubmit}
-      >
+      <form className="w-full" data-testid="search-form" action={onSubmit}>
         <div dir="ltr" className="w-full">
           <input
             aria-label={strings.searchFor}
