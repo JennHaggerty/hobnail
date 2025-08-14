@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react";
 import { strings } from "./strings";
 import { config } from "./config";
+import { fetchItems } from "./functions";
 import Search from "./components/Search";
 import List from "./components/List";
 import Loading from "./components/Loading";
@@ -13,52 +14,31 @@ import ItemInterface from "./interfaces/ItemInterface";
 const Page = () => {
   const [item, setItem] = useState<ItemInterface>();
   const [items, setItems] = useState<ItemInterface[]>();
-  const [itemCount, setItemCount] = useState(0);
   const [totalFound, setTotalFound] = useState(0);
-  const [searched, setSearched] = useState("");
+  const [query, setQuery] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
   const h1HeadingText = item
     ? strings.itemTitle
     : items
-    ? strings.listOfItems
+    ? items.length > 0
+      ? strings.listOfItems
+      : strings.noItemsFound
     : strings.welcome;
 
   const h2HeadingText = item
     ? item.title
-    : searched
-    ? strings.searchedForTitle.replace("{title}", searched)
+    : query
+    ? strings.searchedForTitle.replace("{title}", query)
     : strings.searchFor;
 
-  const listHeading =
-    strings.showingNumber.replace("{number}", itemCount.toString()) +
-    " " +
-    strings.of +
-    " " +
-    strings.numberFound.replace("{number}", totalFound.toString());
-
-  const fetchItems = async (formData: FormData) => {
-    const query = formData.get("query")!.toString();
-    const queryString = query;
-    const api = config.api;
-    const params = config.apiParams;
-    const url = params ? api + queryString + params : api + queryString;
-    const data = await fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        data.docs.map((doc: ItemInterface) => {
-          doc.book_key = doc.key;
-        });
-        return data;
-      })
-      .catch();
-
-    setSearched(query);
-    setTotalFound(data.numFound);
-    setItems(data.docs);
-    setItemCount(data.docs.length);
-    setPageNum(2);
-  };
+  const listHeading = items
+    ? strings.showingNumber.replace("{number}", items.length.toString()) +
+      " " +
+      strings.of +
+      " " +
+      strings.numberFound.replace("{number}", totalFound.toString())
+    : "";
 
   const handleListClick = (key: string) => {
     const target = items?.find((item) => item.key === key);
@@ -72,19 +52,34 @@ const Page = () => {
       <header data-testid="header">
         <Nav
           ariaLabel={strings.mainMenu}
-          items={config.mainNav}
-          id={"main-menu"}
+          items={config.mainNav.items}
+          id={config.mainNav.id}
         />
       </header>
 
       <main data-testid="main">
         <Suspense fallback={<Loading />}>
           <div className="header-items">
-            <h1>{h1HeadingText}</h1>
-            <h2>{h2HeadingText}</h2>
+            {h1HeadingText && <h1>{h1HeadingText}</h1>}
+            {h2HeadingText && <h2>{h2HeadingText}</h2>}
           </div>
-          {!item && !items && <Search onSubmit={fetchItems} />}
 
+          {/** Page 1 */}
+          {!item && !items && (
+            <Search
+              onSubmit={async (e) => {
+                const data = await fetchItems(e);
+                const formQuery = e.get("query")?.toString() || "";
+
+                setTotalFound(data.docs.length);
+                setQuery(formQuery);
+                setItems(data.docs);
+                setPageNum(2);
+              }}
+            />
+          )}
+
+          {/** Page 2 */}
           {!item && items && (
             <List
               items={items}
@@ -93,6 +88,7 @@ const Page = () => {
             />
           )}
 
+          {/** Page 3 */}
           {item && (
             <Item
               key={item.key}
@@ -110,6 +106,7 @@ const Page = () => {
         </Suspense>
       </main>
 
+      {/** Current page num */}
       {strings.pageNumber.replace("{number}", pageNum.toString())}
 
       <footer data-testid="footer">{config.copyright}</footer>

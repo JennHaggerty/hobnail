@@ -43,4 +43,5 @@ export const strings = {
   publishedIn: "Published in",
   by: "by",
   pageNumber: "Page {number}",
+  noItemsFound: "No books found",
 };

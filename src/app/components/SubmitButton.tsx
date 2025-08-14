@@ -29,7 +29,7 @@ const SubmitButton = (props: Props) => {
 
   return (
     <button
-      data-testid={id + "-submit-button"}
+      data-testid={id}
       type="submit"
       disabled={status.pending}
       className={className}

@@ -39,7 +39,7 @@ const Search = (props: Props) => {
         <div dir="rtl">
           {!hideButton && (
             <SubmitButton
-              id={strings.search}
+              id={"search-submit-button"}
               content={strings.search}
               pendingContent={strings.searching}
               className="rounded-s-lg text-white"

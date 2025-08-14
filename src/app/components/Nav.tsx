@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 interface Item {
+  id: string;
   title: string;
   url?: string;
   onClick?: () => void;
@@ -42,6 +43,7 @@ const Nav = (props: Props) => {
           <li key={id + "-navigation-item-" + i}>
             {link.url && (
               <Link
+                data-testid={link.id}
                 href={link.url}
                 aria-label={link.ariaLabel}
                 target={link.external ? "_blank" : undefined}
@@ -53,6 +55,7 @@ const Nav = (props: Props) => {
             )}
             {link.onClick && (
               <button
+                data-testid={link.id}
                 type="button"
                 onClick={link.onClick}
                 className="style-as-link"

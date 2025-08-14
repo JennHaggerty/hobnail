@@ -16,14 +16,22 @@ export const config = {
   apiParams: "&limit=50",
   apiViewMoreLinkKey: "https://openlibrary.org{key}",
   mailto: "mailto:" + email,
-  mainNav: [
-    { title: strings.search, onClick: () => location.reload() },
-    {
-      title: strings.github,
-      url: github,
-      external: true,
-    },
-  ],
+  mainNav: {
+    id: "main-menu",
+    items: [
+      {
+        title: strings.search,
+        id: "search-page",
+        onClick: () => location.reload(),
+      },
+      {
+        title: strings.github,
+        id: "github-page",
+        url: github,
+        external: true,
+      },
+    ],
+  },
   copyright: (
     <>
       Created by{" "}

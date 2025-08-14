@@ -1,29 +1,31 @@
 import Search from "@/app/components/Search";
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
-describe("Search Form", () => {
+describe("Search", () => {
   it("renders a form", () => {
-    render(<Search />);
+    render(<Search onSubmit={jest.fn()} />);
 
     const form = screen.getByTestId("search-form");
+    const input = screen.getByTestId("search-input");
+    const submit = screen.getByTestId("search");
 
     expect(form).toBeInTheDocument();
+    expect(input).toBeInTheDocument();
+    expect(submit).toBeInTheDocument();
   });
-  it("has an input", () => {
-    render(<Search />);
+  it("form changes on user input", () => {
+    const mockSubmit = jest.fn();
+
+    render(<Search onSubmit={mockSubmit} />);
 
     const form = screen.getByTestId("search-form");
     const input = screen.getByTestId("search-input");
 
-    expect(form).toContainElement(input);
-  });
-  it("has a submit button", () => {
-    render(<Search />);
+    fireEvent.change(input, { target: { value: "the lord of the rings" } });
 
-    const form = screen.getByTestId("search-form");
-    const button = screen.getByTestId("search-submit");
-
-    expect(form).toContainElement(button);
+    expect(form).toHaveFormValues({
+      query: "the lord of the rings",
+    });
   });
 });
