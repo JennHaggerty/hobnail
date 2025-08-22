@@ -17,22 +17,6 @@ interface Props {
   ariaLabel?: string;
 }
 
-/**
- * Displays a navigation element
- *
- * @typedef {object} Props
- * @param {string} id Identifier for nav element
- * @param {array} items An array of Items
- * @param {string} [ariaLabel] Optional accessible label naming element
- *
- * @typedef {object} Item
- * @param {string} title Menu item content/text
- * @param {string} [url] Optional url destination for menu item
- * @param {function} [onClick] Optional onClick handler
- * @param {string} [ariaLabel] Optional accessible description for menu item
- * @param {boolean} [external] Optional flag to open external links in new tab
- *
- */
 const Nav = (props: Props) => {
   const { ariaLabel, items, id } = props;
 

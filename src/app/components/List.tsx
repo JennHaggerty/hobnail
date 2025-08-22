@@ -7,15 +7,6 @@ interface Props {
   heading?: string;
 }
 
-/**
- * Displays a navigation element
- *
- * @typedef {object} props
- * @param {array} items An array of ItemInterfaces
- * @param {function} [onClick] Optional, handles user clicking on title
- * @param {string} [heading] Optional <h2> header element
- *
- */
 const List = (props: Props) => {
   const { items, heading, onClick } = props;
 

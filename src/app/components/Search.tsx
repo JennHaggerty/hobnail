@@ -6,14 +6,6 @@ interface Props {
   hideButton?: boolean;
 }
 
-/**
- * Displays a search form
- *
- * @typedef {object} Props
- * @param {function} onSubmit Handles form submission
- * @param {boolean} [hideButton] Optional hide submit button
- *
- */
 const Search = (props: Props) => {
   const { onSubmit, hideButton } = props;
 

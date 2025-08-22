@@ -1,9 +1,6 @@
 import { useLinkStatus } from "next/link";
 import { strings } from "../strings";
 
-/**
- * Displays a loading message
- */
 const Loading = () => {
   const { pending } = useLinkStatus();
 

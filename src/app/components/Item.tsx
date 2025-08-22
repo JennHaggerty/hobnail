@@ -3,16 +3,6 @@ import { config } from "../config";
 import { strings } from "../strings";
 import ItemInterface from "../interfaces/ItemInterface";
 
-/**
- * Item view
- *
- * @typedef {object} Props
- * @param {string} book_key Main identififer, book "key"
- * @param {string[]} [author_name] Optional list of authors
- * @param {number} [first_publish_year] Optional year title was first published
- * @param {string[]} [language] Optional available languages
- * @param {function} [returnToListing] Optional handling to return to all listings from item view
- */
 const Item = (props: ItemInterface) => {
   const {
     book_key,
