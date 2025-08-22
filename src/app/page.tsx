@@ -16,7 +16,6 @@ const Page = () => {
   const [items, setItems] = useState<ItemInterface[]>();
   const [totalFound, setTotalFound] = useState(0);
   const [query, setQuery] = useState("");
-  const [pageNum, setPageNum] = useState(1);
 
   const h1HeadingText = item
     ? strings.itemTitle
@@ -40,10 +39,17 @@ const Page = () => {
       strings.numberFound.replace("{number}", totalFound.toString())
     : "";
 
-  const handleListClick = (key: string) => {
+  const handleListClick = async (key: string) => {
     const target = items?.find((item) => item.key === key);
 
-    setPageNum(3);
+    if (target?.cover_edition_key) {
+      const cover = await fetch(
+        config.apiBookCover.replace("{key}", target.cover_edition_key),
+      );
+
+      target.cover = cover.url;
+    }
+
     setItem(target);
   };
 
@@ -64,22 +70,18 @@ const Page = () => {
             {h2HeadingText && <h2>{h2HeadingText}</h2>}
           </div>
 
-          {/** Page 1 */}
           {!item && !items && (
             <Search
               onSubmit={async (e) => {
                 const data = await fetchItems(e);
-                const formQuery = e.get("query")?.toString() || "";
 
-                setTotalFound(data.docs.length);
-                setQuery(formQuery);
+                setTotalFound(data.numFound);
+                setQuery(data.q);
                 setItems(data.docs);
-                setPageNum(2);
               }}
             />
           )}
 
-          {/** Page 2 */}
           {!item && items && (
             <List
               items={items}
@@ -88,7 +90,6 @@ const Page = () => {
             />
           )}
 
-          {/** Page 3 */}
           {item && (
             <Item
               key={item.key}
@@ -97,17 +98,14 @@ const Page = () => {
               title={item.title}
               first_publish_year={item.first_publish_year}
               language={item.language}
+              cover={item.cover}
               returnToListing={() => {
                 setItem(undefined);
-                setPageNum(2);
               }}
             />
           )}
         </Suspense>
       </main>
-
-      {/** Current page num */}
-      {strings.pageNumber.replace("{number}", pageNum.toString())}
 
       <footer data-testid="footer">{config.copyright}</footer>
     </div>

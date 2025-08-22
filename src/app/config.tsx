@@ -15,6 +15,7 @@ export const config = {
   api: "https://openlibrary.org/search.json?q=",
   apiParams: "&limit=50",
   apiViewMoreLinkKey: "https://openlibrary.org{key}",
+  apiBookCover: "https://covers.openlibrary.org/b/olid/{key}-L.jpg",
   mailto: "mailto:" + email,
   mainNav: {
     id: "main-menu",

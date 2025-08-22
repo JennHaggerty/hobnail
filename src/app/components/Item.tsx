@@ -10,18 +10,24 @@ const Item = (props: ItemInterface) => {
     first_publish_year,
     language,
     returnToListing,
+    cover,
   } = props;
 
   const key = book_key;
 
   return (
     <div data-testid="item" className="item">
-      {author_name &&
-        strings.writtenBy.replace("{author}", author_name.join(", ")) + "."}
-      <br />
-      {first_publish_year &&
-        strings.publishedIn + " " + first_publish_year + "."}
-      <br />
+      {cover && (
+        <img className="lg:max-w-[350px] m-auto pb-5" src={cover} alt="" />
+      )}
+      {author_name && (
+        <p>
+          {strings.writtenBy.replace("{author}", author_name.join(", ")) + "."}
+        </p>
+      )}
+      {first_publish_year && (
+        <p>{strings.publishedIn + " " + first_publish_year + "."}</p>
+      )}
       {language &&
         strings.availableInLanguages + ": " + language.join(", ") + "."}
 

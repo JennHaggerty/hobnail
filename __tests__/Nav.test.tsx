@@ -1,8 +1,6 @@
 import Nav from "@/app/components/Nav";
-import Page from "@/app/page";
-import { strings } from "@/app/strings";
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 describe("Nav", () => {
   const navId = "test-nav";
@@ -21,16 +19,5 @@ describe("Nav", () => {
     const navItem = screen.getByRole("listitem");
 
     expect(navItem).toBeInTheDocument();
-  });
-  it("Navgating to Search page set pageNum to 1", async () => {
-    render(<Page />);
-
-    const searchPage = screen.getByTestId("search-page");
-
-    await fireEvent.click(searchPage);
-
-    const pageNum = screen.getByText("Page 1");
-
-    expect(pageNum).toBeInTheDocument();
   });
 });
